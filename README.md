@@ -1,8 +1,8 @@
-# AIWeb 聊天应用
+# Aaachat 聊天应用
 
 ## 项目简介
 
-AIWeb是一款功能强大的Web端AI聊天应用，为用户提供了与多种顶尖大语言模型交互的便捷平台。通过简洁直观的界面，用户可以无缝切换于通义千问、Kimi (Moonshot AI)、DeepSeek以及OpenRouter提供的各类先进模型之间，体验不同AI的独特能力。
+Aaachat是一款功能强大的Web端AI聊天应用，为用户提供了与多种顶尖大语言模型交互的便捷平台。通过简洁直观的界面，用户可以无缝切换于通义千问、Kimi (Moonshot AI)、DeepSeek以及OpenRouter提供的各类先进模型之间，体验不同AI的独特能力。
 
 本应用采用纯前端技术栈构建，无需复杂的后端部署，只需简单配置API密钥即可在本地浏览器中运行，为AI爱好者、开发者和普通用户提供了一个轻量级但功能完备的AI对话平台。
 ![image](https://github.com/user-attachments/assets/48d7bc93-9322-445c-841f-6ec461747714)
