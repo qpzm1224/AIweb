@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- 设置文档字符编码为UTF-8，确保正确显示中文等字符 -->
+  <meta charset="UTF-8">
+  <!-- 设置视口，使网页在不同设备上都能正确缩放 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- 网页标题 -->
+  <title>个人中心 - AI 聊天助手</title>
+  <!-- 引入自定义样式表 -->
+  <link rel="stylesheet" href="styles.css">
+  <!-- 引入个人中心专用样式表 -->
+  <link rel="stylesheet" href="user-center.css">
+  <!-- 引入Remix图标库，提供丰富的图标选择 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+</head>
+<body>
+  <!-- 个人中心主容器 -->
+  <div class="user-center-container">
+    <!-- 顶部导航栏 -->
+    <header class="user-center-header">
+      <div class="header-left">
+        <a href="index.html" class="back-button">
+          <i class="ri-arrow-left-line"></i>
+        </a>
+        <h1>个人中心</h1>
+      </div>
+      <div class="header-right">
+        <button class="theme-toggle">
+          <i class="ri-moon-line"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- 用户信息卡片 -->
+    <div class="user-profile-card">
+      <div class="user-avatar-container">
+        <img src="./image/user.jpg" alt="用户头像" class="user-profile-avatar">
+        <button class="edit-avatar-btn">
+          <i class="ri-camera-line"></i>
+        </button>
+      </div>
+      <div class="user-profile-info">
+        <h2 class="user-name">用户名</h2>
+        <p class="user-role">普通用户</p>
+        <p class="user-since">加入时间: 2023年10月</p>
+      </div>
+      <button class="edit-profile-btn">
+        <i class="ri-edit-line"></i> 编辑资料
+      </button>
+    </div>
+
+    <!-- 功能模块导航 -->
+    <div class="user-center-nav">
+      <div class="nav-item active" data-target="settings">
+        <i class="ri-user-settings-line"></i>
+        <span>个人设置</span>
+      </div>
+      <div class="nav-item" data-target="history">
+        <i class="ri-history-line"></i>
+        <span>历史记录</span>
+      </div>
+      <div class="nav-item" data-target="favorites">
+        <i class="ri-star-line"></i>
+        <span>收藏夹</span>
+      </div>
+      <div class="nav-item" data-target="security">
+        <i class="ri-shield-keyhole-line"></i>
+        <span>账号安全</span>
+      </div>
+    </div>
+
+    <!-- 内容区域 -->
+    <div class="user-center-content">
+      <!-- 个人设置模块 -->
+      <div class="content-section active" id="settings">
+        <h2 class="section-title">个人设置</h2>
+        <div class="settings-group">
+          <div class="setting-item">
+            <div class="setting-info">
+              <h3>界面语言</h3>
+              <p>选择您偏好的界面语言</p>
+            </div>
+            <div class="setting-control">
+              <select class="language-select">
+                <option value="zh-CN" selected>简体中文</option>
+                <option value="en-US">English</option>
+              </select>
+            </div>
+          </div>
+          <div class="setting-item">
+            <div class="setting-info">
+              <h3>通知设置</h3>
+              <p>接收系统更新和重要通知</p>
+            </div>
+            <div class="setting-control">
+              <label class="toggle-switch">
+                <input type="checkbox" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+          <div class="setting-item">
+            <div class="setting-info">
+              <h3>默认模型</h3>
+              <p>设置默认使用的AI模型</p>
+            </div>
+            <div class="setting-control">
+              <select class="model-select">
+                <option value="moonshot">Moonshot-V1-8K</option>
+                <option value="qwen">通义千问</option>
+                <option value="kimi">Kimi</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 历史记录模块 -->
+      <div class="content-section" id="history">
+        <h2 class="section-title">历史记录</h2>
+        <div class="history-controls">
+          <input type="text" placeholder="搜索历史记录..." class="search-input">
+          <button class="clear-history-btn">清空历史</button>
+        </div>
+        <div class="history-list">
+          <div class="history-item">
+            <div class="history-info">
+              <h3>关于人工智能的讨论</h3>
+              <p class="history-date">2023-11-15 14:30</p>
+            </div>
+            <div class="history-actions">
+              <button class="action-btn" title="继续对话">
+                <i class="ri-chat-1-line"></i>
+              </button>
+              <button class="action-btn" title="添加到收藏">
+                <i class="ri-star-line"></i>
+              </button>
+              <button class="action-btn" title="删除">
+                <i class="ri-delete-bin-line"></i>
+              </button>
+            </div>
+          </div>
+          <div class="history-item">
+            <div class="history-info">
+              <h3>Python编程问题解答</h3>
+              <p class="history-date">2023-11-10 09:45</p>
+            </div>
+            <div class="history-actions">
+              <button class="action-btn" title="继续对话">
+                <i class="ri-chat-1-line"></i>
+              </button>
+              <button class="action-btn" title="添加到收藏">
+                <i class="ri-star-line"></i>
+              </button>
+              <button class="action-btn" title="删除">
+                <i class="ri-delete-bin-line"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 收藏夹模块 -->
+      <div class="content-section" id="favorites">
+        <h2 class="section-title">收藏夹</h2>
+        <div class="favorites-controls">
+          <input type="text" placeholder="搜索收藏..." class="search-input">
+          <div class="view-options">
+            <button class="view-btn active" data-view="grid">
+              <i class="ri-grid-line"></i>
+            </button>
+            <button class="view-btn" data-view="list">
+              <i class="ri-list-check"></i>
+            </button>
+          </div>
+        </div>
+        <div class="favorites-grid">
+          <div class="favorite-item">
+            <div class="favorite-header">
+              <h3>如何提高编程效率</h3>
+              <span class="favorite-date">2023-11-05</span>
+            </div>
+            <p class="favorite-preview">这是一段关于如何提高编程效率的对话，包含了多种实用技巧和工具推荐...</p>
+            <div class="favorite-actions">
+              <button class="action-btn" title="查看对话">
+                <i class="ri-chat-1-line"></i>
+              </button>
+              <button class="action-btn" title="移除收藏">
+                <i class="ri-star-fill"></i>
+              </button>
+              <button class="action-btn" title="分享">
+                <i class="ri-share-line"></i>
+              </button>
+            </div>
+          </div>
+          <div class="favorite-item">
+            <div class="favorite-header">
+              <h3>AI发展趋势分析</h3>
+              <span class="favorite-date">2023-10-28</span>
+            </div>
+            <p class="favorite-preview">这是一段关于人工智能未来发展趋势的深入分析，包括技术突破和应用前景...</p>
+            <div class="favorite-actions">
+              <button class="action-btn" title="查看对话">
+                <i class="ri-chat-1-line"></i>
+              </button>
+              <button class="action-btn" title="移除收藏">
+                <i class="ri-star-fill"></i>
+              </button>
+              <button class="action-btn" title="分享">
+                <i class="ri-share-line"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 账号安全模块 -->
+      <div class="content-section" id="security">
+        <h2 class="section-title">账号安全</h2>
+        <div class="security-options">
+          <div class="security-item">
+            <div class="security-info">
+              <h3>修改密码</h3>
+              <p>定期更新密码可以提高账号安全性</p>
+            </div>
+            <button class="security-btn">
+              <i class="ri-lock-password-line"></i> 修改
+            </button>
+          </div>
+          <div class="security-item">
+            <div class="security-info">
+              <h3>两步验证</h3>
+              <p>添加额外的安全层级保护您的账号</p>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="security-item">
+            <div class="security-info">
+              <h3>登录设备管理</h3>
+              <p>查看并管理已登录的设备</p>
+            </div>
+            <button class="security-btn">
+              <i class="ri-computer-line"></i> 查看
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 引入个人中心脚本 -->
+  <script src="user-center.js"></script>
+</body>
+</html>

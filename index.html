@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+
+  <script src="https://fastly.jsdelivr.net/npm/live2d-widgets@0/autoload.js"></script>  
+  <!-- 设置文档字符编码为UTF-8，确保正确显示中文等字符 -->
+  <meta charset="UTF-8">
+  <!-- 设置视口，使网页在不同设备上都能正确缩放 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- 网页标题 -->
+  <title>AI 聊天助手</title>
+  <!-- 引入自定义样式表 -->
+  <link rel="stylesheet" href="styles.css">
+  <!-- 引入Remix图标库，提供丰富的图标选择 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+  <!-- 引入marked库，用于将Markdown转换为HTML，支持AI回复的格式化显示 -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+  <!-- 整个聊天应用的主容器 -->
+  <div class="chat-container">
+    <!-- 侧边栏切换按钮：点击时调用toggleSidebar()函数显示/隐藏侧边栏 -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()">
+      <!-- 使用Remix图标库的菜单图标 -->
+      <i class="ri-menu-2-line"></i>
+    </button>
+    
+    <!-- 侧边栏：包含模型选择、预设角色和设置等功能区域 -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-content">
+        <!-- 模型选择区域 -->
+        <div class="sidebar-section">
+          <div class="sidebar-title">选择模型</div>
+          <!-- 模型选择器容器，内容将通过JavaScript动态生成 -->
+          <div class="model-selector" id="modelSelector">
+            <!-- 模型选择器将通过 JavaScript 动态生成 -->
+          </div>
+        </div>
+        
+
+
+        <!-- 设置区域：用户可以调整AI回复的参数 -->
+        <div class="sidebar-section">
+          <div class="sidebar-title">设置</div>
+          <div class="settings">
+            <!-- 随机性设置：控制AI回复的创造性和多样性 -->
+            <div class="setting-item">
+              <label for="temperature">随机性</label>
+              <!-- 滑动条，范围0-1，步长0.1，默认值0.3 -->
+              <input type="range" id="temperature" min="0" max="1" step="0.1" value="0.3">
+              <!-- 显示当前随机性值 -->
+              <span id="temperatureValue">0.3</span>
+            </div>
+            <!-- 最大长度设置：控制AI回复的最大token数量 -->
+            <div class="setting-item">
+              <label for="maxTokens">最大长度</label>
+              <!-- 数字输入框，范围100-128000，默认值2000 -->
+              <input type="number" id="maxTokens" min="100" max="128000" value="2000">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 主聊天区域：显示对话内容和输入框 -->
+    <div class="main-content">
+      <!-- 顶部栏：显示当前选择的模型信息和操作按钮 -->
+      <div class="chat-header">
+        <!-- 当前选择的模型信息显示区域 -->
+        <div class="current-model">
+          <!-- 模型提供商图标 -->
+          <img id="providerIcon" src="./image/kimi.jpg" alt="Kimi 图标" class="provider-icon">
+          <!-- 模型信息区域 -->
+          <div class="model-info">
+            <!-- 模型名称 -->
+            <h2 id="modelName">Moonshot-V1-8K</h2>
+          </div>
+        </div>
+        <!-- 顶部操作按钮区域 -->
+        <div class="header-actions">
+          <!-- 明暗主题切换按钮 -->
+          <button id="themeToggle" class="action-button">
+            <i class="ri-moon-line" id="themeIcon"></i>
+          </button>
+          <!-- 个人中心按钮：点击展开/隐藏个人中心面板 -->
+          <div class="user-center">
+            <button id="userCenterBtn" class="action-button" onclick="toggleUserCenter()">
+              <img src="./image/user.jpg" alt="用户头像" class="user-avatar">
+            </button>
+            <!-- 个人中心下拉面板 -->
+            <div class="user-center-panel" id="userCenterPanel">
+              <div class="user-info">
+                <img src="./image/user.jpg" alt="用户头像" class="user-panel-avatar">
+                <div class="user-details">
+                  <h3>用户名</h3>
+                  <p>普通用户</p>
+                </div>
+              </div>
+              <div class="user-menu">
+                <a href="user-center.html" class="user-menu-item"><i class="ri-user-settings-line"></i> 个人设置</a>
+                <a href="user-center.html#history" class="user-menu-item"><i class="ri-history-line"></i> 历史记录</a>
+                <a href="user-center.html#favorites" class="user-menu-item"><i class="ri-star-line"></i> 收藏夹</a>
+                <a href="#" class="user-menu-item"><i class="ri-logout-box-r-line"></i> 退出登录</a>
+              </div>
+            </div>
+          </div>
+          <!-- 清空聊天按钮：删除所有对话记录 -->
+          <button id="clearChat" class="action-button">
+            <i class="ri-delete-bin-line"></i>
+          </button>
+          <!-- 导出聊天按钮：保存对话记录 -->
+          <button id="exportChat" class="action-button">
+            <i class="ri-download-line"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- 预设角色区域：用户可以选择预定义的AI角色 -->
+      <div class="preset-roles">
+        <div class="preset-header" onclick="togglePresetList()">
+          <div class="header-left">
+            <h3><i class="ri-robot-line"></i> 预设角色</h3>
+            <div class="preset-toggle">
+              <i class="ri-arrow-down-s-line"></i>
+            </div>
+          </div>
+          <div class="preset-categories">
+            <span class="preset-category active" data-category="all">全部</span>
+            <span class="preset-category" data-category="assistant">助手</span>
+            <span class="preset-category" data-category="creative">创意</span>
+            <span class="preset-category" data-category="professional">专业</span>
+          </div>
+          <div class="add-preset" onclick="event.stopPropagation(); addPreset()">
+            <i class="ri-add-line"></i> 添加角色
+          </div>
+        </div>
+        <!-- 预设角色列表容器，内容将通过JavaScript动态生成 -->
+        <div class="preset-list" id="presetList">
+          <!-- 预设角色列表将通过 JavaScript 动态生成 -->
+        </div>
+      </div>
+
+      <!-- 聊天消息区域：显示用户和AI的对话内容 -->
+      <div class="chat-messages" id="chatMessages">
+        <!-- 消息内容将通过 JavaScript 动态生成，包括用户问题和AI回复 -->
+      </div>
+
+      <!-- 输入区域：用户输入问题的区域 -->
+      <div class="chat-input">
+        <!-- 主要输入框和发送按钮 -->
+        <div class="input-wrapper">
+          <!-- 上传文件按钮：允许用户上传图片等文件 -->
+          <button id="uploadFile" class="action-button">
+            <i class="ri-attachment-2"></i>
+          </button>
+          <!-- 语音输入按钮：允许用户通过语音输入问题 -->
+          <button id="voiceInput" class="action-button">
+            <i class="ri-mic-line"></i>
+          </button>
+          <!-- 文本输入框：用户输入问题的地方，自动调整高度 -->
+          <textarea id="inputText" placeholder="输入消息..." rows="1"></textarea>
+          <!-- 发送按钮：点击后发送用户输入的问题 -->
+          <button id="sendButton" class="send-button">
+            <i class="ri-send-plane-fill"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Token 计数器：显示当前对话使用的token数量和预计费用 -->
+      <div class="token-counter">
+        <!-- 当前使用的token数量 -->
+        <span id="tokenCount">0</span> / <span id="maxTokenCount">2000</span> tokens
+        <!-- 预计费用显示 -->
+        <span id="tokenPrice">预计费用: ¥0.00</span>
+      </div>
+    </div>
+
+    <!-- 加载状态指示器：AI思考和生成回复时显示的加载动画 -->
+    <div class="loading-indicator" id="loadingIndicator">
+      <!-- 旋转动画效果 -->
+      <div class="spinner"></div>
+    </div>
+  </div>
+
+  <!-- 模型信息弹窗：点击模型时显示详细信息的弹出窗口 -->
+  <div class="modal" id="modelInfoModal">
+    <div class="modal-content">
+      <!-- 弹窗标题栏 -->
+      <div class="modal-header">
+        <h3>模型信息</h3>
+        <!-- 关闭按钮 -->
+        <button class="close-button">
+          <i class="ri-close-line"></i>
+        </button>
+      </div>
+      <!-- 弹窗内容区域 -->
+      <div class="modal-body">
+        <!-- 模型详细信息将通过 JavaScript 动态生成，包括模型参数、能力说明等 -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 引入配置文件：包含模型列表、预设角色等配置信息 -->
+  <script src="config.js"></script>
+  <!-- 引入主应用脚本：实现聊天功能、UI交互等核心逻辑 -->
+  <script src="app.js"></script>
+</body>
+</html>

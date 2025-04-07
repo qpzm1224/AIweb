@@ -1,0 +1,1882 @@
+/* 全局CSS变量定义 - 集中管理应用的样式属性，便于统一修改和主题切换 */
+:root {
+  /* 尺寸变量 - 定义应用中各元素的标准尺寸，保持一致性 */
+  --sidebar-width: 300px;      /* 侧边栏宽度 */
+  --header-height: 64px;       /* 顶部导航栏高度 */
+  --input-height: 80px;       /* 输入框区域高度 */
+  --border-radius: 16px;       /* 通用圆角大小 */
+  --avatar-size: 40px;         /* 头像尺寸 */;
+  
+  
+  /* 动画时间变量 - 控制过渡和动画效果的速度 */
+  --transition-speed: 0.3s;    /* 过渡动画持续时间 */
+  --animation-speed: 0.5s;     /* 一般动画持续时间 */
+  
+  /* 阴影变量 - 定义不同层级的阴影效果，增强UI层次感 */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);   /* 小阴影 */
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);    /* 中阴影 */
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);  /* 大阴影 */
+  
+  /* 字体变量 - 定义应用使用的字体系列 */
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;  /* 无衬线字体，用于普通文本 */
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;  /* 等宽字体，用于代码显示 */
+
+  /* 主题颜色变量 - 定义应用的配色方案，这里使用浅色主题，更接近Kimi风格 */
+  --color-primary: #4e6ef2;    /* 主要强调色，用于按钮、链接等 */
+  --color-secondary: #60a5fa;  /* 次要强调色 */
+  --color-accent: #93c5fd;     /* 辅助强调色 */
+  --color-background: #f5f5f7; /* 应用背景色，浅灰色 */
+  --color-surface: #ffffff;    /* 表面色，用于卡片、面板等 */
+  --color-surface-alt: #f9f9fb; /* 替代表面色 */
+  --color-text: #333333;       /* 主文本颜色，深色 */
+  --color-text-secondary: #666666; /* 次要文本颜色 */
+  --color-border: #e5e7eb;     /* 边框颜色 */
+  --color-hover: #f0f0f5;      /* 悬停状态颜色 */
+  --gradient-start: #4e6ef2;   /* 渐变起始色 */
+  --gradient-end: #5d7bf9;     /* 渐变结束色 */
+  --message-user-bg: #4e6ef2;  /* 用户消息背景色，使用蓝色 */
+  --message-assistant-bg: #f9f9fb; /* AI助手消息背景色，浅灰色 */
+}
+
+/* 暗色主题变量 */
+[data-theme="dark"] {
+  --color-primary: #6d8bff;    /* 主要强调色，更亮更鲜艳 */
+  --color-secondary: #70b5ff;  /* 次要强调色，更鲜明 */
+  --color-accent: #a3d5ff;     /* 辅助强调色，更柔和 */
+  --color-background: #121212; /* 应用背景色，优化的深灰黑色 */
+  --color-surface: #1e1e1e;    /* 表面色，用于卡片、面板等 */
+  --color-surface-alt: #2a2a2a; /* 替代表面色，增强层次感 */
+  --color-text: #f0f0f0;       /* 主文本颜色，稍微柔和的白色 */
+  --color-text-secondary: #b0b0b0; /* 次要文本颜色，更柔和 */
+  --color-border: #383838;     /* 边框颜色，更明显 */
+  --color-hover: #303030;      /* 悬停状态颜色，更明显 */
+  --gradient-start: #6d8bff;   /* 渐变起始色 */
+  --gradient-end: #5e7eff;     /* 渐变结束色 */
+  --message-user-bg: #4a5de0;  /* 用户消息背景色，更深邃的蓝色 */
+  --message-assistant-bg: #2a2a2a; /* AI助手消息背景色，更明显 */
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.25);   /* 小阴影，更柔和 */
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.35);    /* 中阴影，更明显 */
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.45);  /* 大阴影，更自然 */
+}
+
+/* 基础样式 - 重置所有元素的默认样式，确保跨浏览器一致性 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* 使元素的宽度包含padding和border，避免布局溢出 */
+}
+
+body {
+  font-family: var(--font-sans); /* 使用定义的无衬线字体 */
+  background-color: var(--color-background); /* 应用深色背景 */
+  color: var(--color-text); /* 设置文本为浅色，与深色背景形成对比 */
+  line-height: 1.5; /* 设置行高，提高文本可读性 */
+  overflow: hidden; /* 防止页面滚动，保持应用在视口内 */
+}
+
+/* 聊天容器 - 整个应用的主容器，采用弹性布局实现侧边栏和主内容区域的排列 */
+.chat-container {
+  display: flex; /* 使用弹性布局，便于子元素的水平排列 */
+  height: 100vh; /* 设置高度为视口高度，占满整个屏幕 */
+  position: relative; /* 相对定位，作为子元素的定位参考 */
+  background-color: var(--color-background); /* 应用背景色 */
+}
+
+/* 侧边栏 - 包含模型选择、预设角色和设置等功能区域 */
+.sidebar {
+  width: var(--sidebar-width); /* 设置侧边栏宽度 */
+  background: var(--color-surface); /* 设置背景色，与主背景形成区分 */
+  border-right: 1px solid var(--color-border); /* 添加右侧边框，增强视觉分隔 */
+  transition: transform var(--transition-speed); /* 添加过渡效果，使显示/隐藏平滑 */
+  z-index: 100; /* 设置较高层级，确保显示在其他元素之上 */
+  overflow-y: auto; /* 内容过多时允许垂直滚动 */
+  box-shadow: var(--shadow-lg); /* 添加阴影，增强立体感 */
+  position: fixed; /* 固定定位，不随页面滚动 */
+  top: 0;
+  left: 0;
+  bottom: 0;
+  transform: translateX(-100%); /* 初始状态下隐藏在屏幕左侧 */
+}
+
+.sidebar.open {
+  transform: translateX(0); /* 添加open类时显示侧边栏 */
+}
+
+.sidebar-content {
+  padding: 1rem; /* 内部内容添加内边距，增加空间感 */
+}
+
+.sidebar-section {
+  margin-bottom: 2rem; /* 各部分之间添加间距，提高可读性 */
+}
+
+.sidebar-title {
+  font-size: 1.2rem; /* 设置标题字体大小 */
+  font-weight: 600; /* 设置字体粗细，增强标题视觉效果 */
+  margin-bottom: 1rem; /* 标题下方添加间距 */
+  color: var(--color-text); /* 设置文本颜色 */
+}
+
+/* 侧边栏切换按钮 - 控制侧边栏的显示与隐藏 */
+.sidebar-toggle {
+  position: fixed; /* 固定定位，不随页面滚动 */
+  top: 12px; /* 距离顶部的距离 */
+  left: calc(var(--sidebar-width) - 20px); /* 根据侧边栏宽度计算位置 */
+  width: 40px; /* 按钮宽度 */
+  height: 40px; /* 按钮高度 */
+  border-radius: 50%; /* 圆形按钮 */
+  background: var(--color-surface); /* 背景色 */
+  border: 1px solid var(--color-border); /* 边框 */
+  color: var(--color-text); /* 图标颜色 */
+  cursor: pointer; /* 鼠标悬停时显示手型光标 */
+  z-index: 1000; /* 确保按钮显示在最上层 */
+  display: flex; /* 使用弹性布局居中图标 */
+  align-items: center; /* 垂直居中 */
+  justify-content: center; /* 水平居中 */
+  transition: all var(--transition-speed); /* 添加过渡效果 */
+  box-shadow: var(--shadow-md); /* 添加阴影效果 */
+  transform: translateX(-100%); /* 初始状态下隐藏 */
+}
+
+.sidebar-toggle i {
+  font-size: 1.5rem; /* 图标大小 */
+  transition: transform var(--transition-speed); /* 图标旋转动画 */
+}
+
+/* 当侧边栏打开时，调整按钮位置 */
+.sidebar.open + .main-content .sidebar-toggle {
+  transform: translateX(0); /* 显示按钮 */
+  left: calc(var(--sidebar-width) - 20px); /* 调整位置到侧边栏右侧 */
+}
+
+/* 当侧边栏打开时，旋转图标 */
+.sidebar.open + .main-content .sidebar-toggle i {
+  transform: rotate(180deg); /* 旋转图标180度 */
+}
+
+/* 按钮悬停效果 */
+.sidebar-toggle:hover {
+  background: var(--color-hover); /* 改变背景色 */
+  transform: translateX(-100%) scale(1.05); /* 轻微放大效果 */
+}
+
+/* 侧边栏打开时的按钮悬停效果 */
+.sidebar.open + .main-content .sidebar-toggle:hover {
+  transform: scale(1.05); /* 轻微放大效果 */
+}
+
+/* 提供商标题 */
+.provider-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 1rem 0 0.5rem;
+  padding: 0 0.5rem;
+}
+
+/* 模型选项 - 侧边栏中的可选AI模型卡片 */
+.model-option {
+  display: flex; /* 使用弹性布局，便于图标和文本的排列 */
+  align-items: center; /* 垂直居中对齐内容 */
+  padding: 0.75rem; /* 内边距，增加点击区域和视觉空间 */
+  margin: 0.5rem 0; /* 上下外边距，分隔各个模型选项 */
+  border-radius: var(--border-radius); /* 圆角边框 */
+  border: 1px solid var(--color-border); /* 边框 */
+  cursor: pointer; /* 鼠标悬停时显示手型光标，提示可点击 */
+  transition: all var(--transition-speed); /* 添加过渡效果 */
+  background: var(--color-surface-alt); /* 背景色 */
+}
+
+/* 预设角色选项 - 侧边栏中的可选角色卡片 */
+.preset-option {
+  display: flex; /* 使用弹性布局，便于图标和文本的排列 */
+  align-items: center; /* 垂直居中对齐内容 */
+  padding: 1rem; /* 增加内边距，提高可视性 */
+  border-radius: var(--border-radius); /* 圆角边框 */
+  border: 1px solid var(--color-border); /* 边框 */
+  cursor: pointer; /* 鼠标悬停时显示手型光标，提示可点击 */
+  transition: all var(--transition-speed); /* 添加过渡效果 */
+  background: linear-gradient(145deg, var(--color-surface), var(--color-surface-alt)); /* 渐变背景 */
+  flex: 0 1 calc(33.333% - 0.75rem); /* 设置每个选项占据三分之一宽度，考虑间距 */
+  min-width: 200px; /* 设置最小宽度，确保内容显示完整 */
+  box-sizing: border-box; /* 确保padding和border包含在宽度内 */
+  box-shadow: var(--shadow-sm); /* 默认添加轻微阴影 */
+}
+
+.preset-option:hover {
+  background: linear-gradient(145deg, var(--color-surface-alt), var(--color-surface)); /* 悬停时反向渐变 */
+  transform: translateY(-3px); /* 增加上移距离，增强交互感 */
+  box-shadow: var(--shadow-md); /* 添加阴影，增强立体感 */
+}
+
+.preset-option.selected {
+  border-color: var(--color-primary); /* 选中时边框使用主题色 */
+  background: linear-gradient(145deg, var(--color-hover), var(--color-surface-alt)); /* 选中时使用特殊渐变 */
+  box-shadow: 0 5px 15px rgba(59, 130, 246, 0.25);
+  transform: translateY(-2px); /* 选中时轻微上移 */
+}
+
+.preset-option.selected::before {
+  opacity: 1;
+  width: 6px;
+}
+
+.preset-option.selected::after {
+  content: '✓';
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.preset-icon {
+  width: 36px; /* 减小图标宽度 */
+  height: 36px; /* 减小图标高度 */
+  border-radius: 50%; /* 圆形图标 */
+  margin-right: 0.5rem; /* 减小右侧外边距 */
+  object-fit: cover; /* 确保图片填充整个区域 */
+  border: 2px solid var(--color-border); /* 添加边框 */
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15); /* 添加阴影效果 */
+  transition: all var(--transition-speed); /* 添加过渡效果 */
+  background-color: var(--color-surface-alt); /* 添加背景色 */
+}
+
+.preset-option:hover .preset-icon {
+  border-color: var(--color-primary); /* 悬停时改变边框颜色 */
+  transform: scale(1.1); /* 悬停时轻微放大 */
+  box-shadow: 0 5px 12px rgba(59, 130, 246, 0.25); /* 增强阴影效果 */
+}
+
+.preset-option.selected .preset-icon {
+  border-color: var(--color-primary); /* 选中时边框使用主题色 */
+  box-shadow: 0 5px 12px rgba(59, 130, 246, 0.3); /* 选中时增强阴影效果 */
+}
+
+.preset-info {
+  flex: 1; /* 占据剩余空间 */
+  position: relative;
+  z-index: 1;
+}
+
+.preset-name {
+  font-weight: 600; /* 字体粗细 */
+  margin-bottom: 0.2rem; /* 减小下方外边距 */
+  color: var(--color-text); /* 文本颜色 */
+  font-size: 0.95rem; /* 减小字体大小 */
+  letter-spacing: 0.3px; /* 增加字母间距 */
+  transition: all var(--transition-speed); /* 添加过渡效果 */
+}
+
+.preset-description {
+  font-size: 0.8rem; /* 减小字体大小 */
+  color: var(--color-text-secondary); /* 次要文本颜色 */
+  line-height: 1.3; /* 减小行高 */
+  max-width: 95%; /* 增加最大宽度利用空间 */
+  transition: all var(--transition-speed); /* 添加过渡效果 */
+  opacity: 0.85; /* 稍微降低不透明度 */
+}
+
+.preset-option:hover .preset-name {
+  color: var(--color-primary); /* 悬停时改变标题颜色 */
+}
+
+.preset-option:hover .preset-description {
+  opacity: 1; /* 悬停时增加不透明度 */
+}
+
+.preset-option.selected .preset-name {
+  color: var(--color-primary); /* 选中时改变标题颜色 */
+}
+
+/* 预设角色列表样式 */
+.preset-roles {
+  background: linear-gradient(145deg, var(--color-surface), var(--color-surface-alt));
+  border-radius: calc(var(--border-radius) + 4px); /* 四周都有圆角 */
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28); /* 增强阴影效果 */
+  transition: all var(--transition-speed);
+  position: fixed; /* 改为固定定位 */
+  top: 1%; /* 调整顶部位置，与模型名称在同一水平线上 */
+  left: 25%; /* 距离左侧的距离 */
+  max-width: 850px; /* 调整最大宽度 */
+  width: 850px; /* 固定宽度 */
+  z-index: 99; /* 确保不被其他元素遮挡 */
+  display: flex; /* 使用弹性布局 */
+  flex-direction: column; 
+  max-height: 450px; /* 限制最大高度 */
+  overflow-y: auto; /* 内容过多时允许垂直滚动 */
+}
+
+.preset-header {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  padding: 1rem 1.2rem; /* 增加内边距，提高可视性 */
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--color-surface-alt), var(--color-surface));
+  transition: all var(--transition-speed);
+  position: relative;
+  z-index: 1;
+  justify-content: space-between;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  height: 60px; /* 固定高度，确保一致性 */
+}
+
+.preset-header:hover {
+  background: linear-gradient(135deg, var(--color-hover), var(--color-surface-alt));
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.preset-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.preset-header h3 i {
+  color: var(--color-primary);
+  font-size: 1.3rem;
+}
+
+.preset-categories {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
+  width: auto;
+  align-items: center;
+}
+
+.preset-category {
+  padding: 0.5rem 0.9rem; /* 增加内边距，提高可视性 */
+  border-radius: 24px; /* 增加圆角 */
+  font-size: 0.85rem; /* 增加字体大小 */
+  font-weight: 500; /* 增加字体粗细 */
+  cursor: pointer;
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  transition: all var(--transition-speed);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15); /* 增强阴影效果 */
+  letter-spacing: 0.5px; /* 增加字母间距 */
+}
+
+.preset-category.active {
+  background: var(--color-primary);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+  transform: translateY(-2px); /* 活跃状态时上移 */
+  font-weight: 600; /* 增加字体粗细 */
+}
+
+.preset-category:hover {
+  background: var(--color-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  color: var(--color-text); /* 悬停时文字颜色更亮 */
+}
+
+.preset-toggle {
+  margin-left: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(59, 130, 246, 0.1);
+  transition: all var(--transition-speed), transform var(--transition-speed);
+  position: relative;
+}
+
+.preset-toggle i {
+  transition: transform var(--transition-speed);
+  color: var(--color-primary);
+  font-size: 1.2rem;
+}
+
+.preset-roles.collapsed {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  height: 60px; /* 增加标题栏高度，提高可视性 */
+  overflow: hidden;
+  border-radius: var(--border-radius); /* 收起时四周都有圆角 */
+  transform: translateY(-5px); /* 收起时轻微上移，增强视觉效果 */
+}
+
+.preset-roles.collapsed .preset-toggle i {
+  transform: rotate(-180deg);
+}
+
+.preset-roles.collapsed .preset-toggle {
+  transform: translateX(10px) translateY(-5px);
+  transition: transform var(--transition-speed);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(59, 130, 246, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+  }
+}
+
+.preset-list {
+  max-height: 380px;
+  overflow-y: auto;
+  transition: max-height var(--transition-speed), opacity var(--transition-speed), transform var(--transition-speed);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+  padding: 1.2rem;
+  background: linear-gradient(180deg, var(--color-surface), var(--color-surface-alt));
+  position: relative;
+  z-index: 0;
+  scrollbar-width: thin;
+  border-top: 1px solid var(--color-border); /* 添加顶部边框，分隔标题和内容 */
+}
+
+.preset-roles.collapsed .preset-list {
+  max-height: 0;
+  opacity: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin: 0;
+  transform: translateY(-10px); /* 收起时内容上移，增强动画效果 */
+}
+
+.add-preset {
+  padding: 0.4rem 0.8rem; /* 增加内边距，提高可视性 */
+  border-radius: 20px;
+  font-size: 0.85rem; /* 增加字体大小 */
+  font-weight: 500; /* 增加字体粗细 */
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--color-primary), var(--gradient-start)); /* 渐变背景 */
+  color: white;
+  transition: all var(--transition-speed);
+  border: none;
+  box-shadow: 0 3px 6px rgba(59, 130, 246, 0.3); /* 增强阴影效果 */
+  display: flex;
+  align-items: center;
+  gap: 0.4rem; /* 增加图标和文字间距 */
+  letter-spacing: 0.5px; /* 增加字母间距 */
+}
+
+.add-preset:hover {
+  background: linear-gradient(135deg, var(--gradient-start), var(--color-primary)); /* 悬停时反向渐变 */
+  transform: translateY(-3px); /* 增加上移距离，增强交互感 */
+  box-shadow: 0 5px 10px rgba(59, 130, 246, 0.5); /* 增强阴影效果 */
+}
+
+.preset-option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.1rem;
+  border-radius: calc(var(--border-radius) + 2px); /* 增加圆角 */
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  cursor: pointer;
+  transition: all var(--transition-speed);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18), 0 2px 4px rgba(0, 0, 0, 0.1); /* 增强阴影效果 */
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(5px);
+  position: relative;
+}
+
+.preset-option:hover {
+  transform: translateY(-3px) scale(1.02);
+  border-color: var(--color-primary);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+  background: var(--color-surface-alt);
+}
+
+.preset-option::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-end));
+  opacity: 0;
+  transition: opacity var(--transition-speed);
+}
+
+.preset-option:hover::before {
+  opacity: 1;
+}
+
+.preset-option::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, transparent 0%, rgba(59, 130, 246, 0.1) 100%);
+  opacity: 0;
+  transition: opacity var(--transition-speed);
+  pointer-events: none;
+}
+
+.preset-option:hover::after {
+  opacity: 1;
+}
+
+.preset-option.selected {
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+  border-color: transparent;
+  color: white;
+  box-shadow: 0 8px 20px rgba(29, 78, 216, 0.4);
+  transform: translateY(-3px) scale(1.02);
+  animation: pulse 2s infinite;
+}
+
+.preset-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--color-border);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  transition: all var(--transition-speed);
+  background-color: var(--color-surface-alt);
+  position: relative;
+}
+
+.preset-info {
+  flex: 1;
+}
+
+.preset-name {
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+  color: var(--color-text);
+  font-size: 1rem;
+}
+
+.preset-description {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+  display: -webkit-box;
+  /* 使用标准属性和webkit前缀实现多行文本截断 */
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.preset-option.selected .preset-description {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.preset-option:hover .preset-icon {
+  transform: scale(1.05) rotate(5deg);
+  border-color: var(--color-primary);
+}
+
+.preset-option.selected .preset-icon {
+  border-color: white;
+  box-shadow: 0 0 0 2px var(--color-primary);
+}
+
+/* 添加预设角色按钮 */
+.add-preset i {
+  font-size: 1.1rem;
+  transition: transform var(--transition-speed);
+}
+
+.add-preset:hover i {
+  transform: rotate(90deg) scale(1.1);
+  animation: spin-slow 1s ease-in-out;
+}
+
+.add-preset i {
+  margin-right: 0.5rem; /* 图标右侧外边距 */
+}
+
+@keyframes spin-slow {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(90deg); }
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(29, 78, 216, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(29, 78, 216, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(29, 78, 216, 0); }
+}
+
+.model-option:hover {
+  transform: translateY(-2px); /* 悬停时轻微上移，增强交互感 */
+  border-color: var(--color-primary); /* 改变边框颜色为主题色 */
+  box-shadow: var(--shadow-md); /* 添加阴影效果 */
+  background: var(--color-surface); /* 改变背景色 */
+}
+
+.model-option.selected {
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)); /* 选中状态使用渐变背景 */
+  border-color: transparent; /* 移除边框 */
+  color: white; /* 文本颜色改为白色，增强对比度 */
+}
+
+.model-option .model-icon {
+  width: 40px; /* 图标宽度 */
+  height: 40px; /* 图标高度 */
+  border-radius: 8px; /* 圆角 */
+  margin-right: 0.75rem; /* 右侧外边距，与文本保持间距 */
+  object-fit: cover; /* 确保图片正确填充容器 */
+}
+
+.model-option .model-info {
+  flex: 1; /* 占据剩余空间 */
+}
+
+.model-option .model-name {
+  font-weight: 600; /* 加粗字体 */
+  margin-bottom: 0.25rem; /* 下方外边距 */
+}
+
+.model-option .model-description {
+  font-size: 0.875rem; /* 较小的字体大小 */
+  opacity: 0.8; /* 透明度，使描述文本不那么突出 */
+  line-height: 1.4; /* 行高，提高可读性 */
+}
+
+.model-option.selected .model-description {
+  opacity: 0.9;
+}
+
+/* 预设角色 - 显示可选的AI角色卡片，采用横向布局 */
+.preset-list {
+  display: flex; /* 使用弹性布局，便于卡片的横向排列 */
+  flex-wrap: nowrap; /* 不换行 */
+  overflow-x: auto; /* 允许水平滚动 */
+  gap: 0.75rem; /* 卡片之间的间距 */
+  padding-bottom: 0.5rem; /* 底部内边距，为滚动条留出空间 */
+}
+
+.preset-item {
+  min-width: 120px; /* 最小宽度 */
+  flex: 0 0 auto; /* 不伸缩，保持原始大小 */
+  display: flex; /* 使用弹性布局 */
+  flex-direction: column; /* 垂直排列内容 */
+  align-items: center; /* 水平居中对齐 */
+  padding: 1rem; /* 增加内边距，提高可视性 */
+  border-radius: var(--border-radius); /* 圆角边框 */
+  border: 1px solid var(--color-border); /* 边框 */
+  cursor: pointer; /* 鼠标悬停时显示手型光标 */
+  transition: all var(--transition-speed); /* 添加过渡效果 */
+  text-align: center; /* 文本居中 */
+  background: linear-gradient(145deg, var(--color-surface), var(--color-surface-alt)); /* 渐变背景 */
+  box-shadow: var(--shadow-sm); /* 默认添加轻微阴影 */
+}
+
+.preset-item:hover {
+  background: linear-gradient(145deg, var(--color-surface-alt), var(--color-surface)); /* 悬停时反向渐变 */
+  transform: translateY(-3px); /* 增加上移距离，增强交互感 */
+  border-color: var(--color-primary); /* 改变边框颜色为主题色 */
+  box-shadow: var(--shadow-lg); /* 增强阴影效果 */
+}
+
+.preset-icon {
+  width: 56px; /* 增加图标宽度 */
+  height: 56px; /* 增加图标高度 */
+  margin-bottom: 0.75rem; /* 增加下方外边距 */
+  border-radius: 50%; /* 圆形图标 */
+  object-fit: cover; /* 确保图片正确填充容器 */
+  border: 2px solid var(--color-border); /* 添加边框 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* 添加阴影，增强立体感 */
+  transition: all var(--transition-speed); /* 添加过渡效果 */
+}
+
+.preset-item:hover .preset-icon {
+  border-color: var(--color-primary); /* 悬停时改变边框颜色 */
+  transform: scale(1.05); /* 悬停时轻微放大 */
+}
+
+.preset-name {
+  font-size: 0.875rem; /* 字体大小 */
+  font-weight: 500; /* 字体粗细 */
+}
+
+/* 设置区域 - 包含AI参数调整选项，如随机性和最大长度 */
+.settings {
+  display: grid; /* 使用网格布局 */
+  gap: 1rem; /* 设置项之间的间距 */
+  background: var(--color-surface-alt); /* 背景色 */
+  padding: 1rem; /* 内边距 */
+  border-radius: var(--border-radius); /* 圆角边框 */
+  border: 1px solid var(--color-border); /* 边框 */
+}
+
+.setting-item {
+  display: grid; /* 使用网格布局排列标签和控件 */
+  gap: 0.5rem; /* 标签和控件之间的间距 */
+}
+
+.setting-item label {
+  font-size: 0.875rem; /* 标签字体大小 */
+  font-weight: 500; /* 标签字体粗细 */
+}
+
+/* 主内容区域 - 显示聊天界面的主要部分，包括消息列表和输入框 */
+.main-content {
+  flex: 1; /* 占据除侧边栏外的所有空间 */
+  display: flex; /* 使用弹性布局 */
+  flex-direction: column; /* 垂直排列子元素 */
+  min-width: 0; /* 防止内容溢出 */
+  background: var(--color-background); /* 背景色 */
+  margin-left: 0; /* 初始状态下无左边距 */
+  transition: margin-left var(--transition-speed); /* 添加过渡效果，使侧边栏显示/隐藏时平滑 */
+  padding-top: var(--header-height); /* 顶部填充，为固定定位的头部留出空间 */
+  max-width: 1000px; /* 设置最大宽度，类似ChatGPT界面 */
+  margin: 0 auto; /* 水平居中 */
+  /* 移除重复的顶部边距，避免双倍空隙 */
+}
+
+/* 聊天头部 - 显示当前选择的模型信息和操作按钮 */
+.chat-header {
+  height: var(--header-height); /* 设置高度 */
+  padding: 0 1.5rem; /* 调整水平内边距 */
+  display: flex; /* 使用弹性布局 */
+  align-items: center; /* 垂直居中对齐 */
+  justify-content: flex-end; /* 右对齐，将操作按钮放在右侧 */
+  position: fixed; /* 固定定位 */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 99; /* 较高层级 */
+  background: transparent; /* 移除背景色，使其透明 */
+}
+
+/* 个人中心样式 */
+.user-center {
+  position: relative;
+  margin-right: 0.5rem;
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--color-primary);
+  transition: all var(--transition-speed);
+}
+
+#userCenterBtn {
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+#userCenterBtn:hover .user-avatar {
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+}
+
+.user-center-panel {
+  position: absolute;
+  top: calc(var(--avatar-size) + 5px);
+  right: 0;
+  width: 250px;
+  background: var(--color-surface);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-lg);
+  z-index: 1000;
+  overflow: hidden;
+  transition: all var(--transition-speed);
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+}
+
+.user-center-panel.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background: linear-gradient(145deg, var(--color-surface), var(--color-surface-alt));
+  border-bottom: 1px solid var(--color-border);
+}
+
+.user-panel-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--color-primary);
+  margin-right: 1rem;
+}
+
+.user-details h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--color-text);
+}
+
+.user-details p {
+  margin: 0.2rem 0 0;
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+}
+
+.user-menu {
+  padding: 0.5rem 0;
+}
+
+.user-menu-item {
+  display: flex;
+  align-items: center;
+  padding: 0.7rem 1rem;
+  color: var(--color-text);
+  text-decoration: none;
+  transition: all var(--transition-speed);
+}
+
+.user-menu-item:hover {
+  background: var(--color-hover);
+  color: var(--color-primary);
+}
+
+.user-menu-item i {
+  margin-right: 0.5rem;
+  font-size: 1.1rem;
+  color: var(--color-primary);
+}
+
+/* 添加内部容器使头部内容居中 */
+.chat-header::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-width: 1000px;
+  margin: 0 auto;
+  pointer-events: none; /* 确保不影响内部元素的交互 */
+}
+
+.current-model {
+  display: flex; /* 使用弹性布局，便于图标和文本的排列 */
+  align-items: center; /* 垂直居中对齐内容 */
+  gap: 0.75rem; /* 设置元素之间的间距 */
+  position: fixed; /* 固定定位 */
+  left: 1.5rem; /* 距离左侧的距离 */
+  top: 1rem; /* 距离顶部的距离 */
+  z-index: 100; /* 确保显示在其他元素之上 */
+}
+
+.provider-icon {
+  width: 42px; /* 图标宽度 */
+  height: 42px; /* 图标高度 */
+  border-radius: 8px; /* 圆角 */
+  object-fit: cover; /* 确保图片正确填充容器 */
+  border: 1px solid var(--color-border); /* 添加边框 */
+  box-shadow: var(--shadow-sm); /* 添加轻微阴影效果 */
+  transition: transform var(--transition-speed); /* 添加过渡效果 */
+}
+
+.provider-icon:hover {
+  transform: scale(1.05); /* 悬停时轻微放大效果 */
+}
+
+.model-info {
+  display: flex; /* 使用弹性布局 */
+  flex-direction: column; /* 垂直排列子元素 */
+  justify-content: center; /* 垂直居中 */
+}
+
+.model-info h2 {
+  margin: 0; /* 移除默认外边距 */
+  font-size: 1.1rem; /* 设置字体大小 */
+  font-weight: 600; /* 设置字体粗细 */
+  color: var(--color-text); /* 设置文本颜色 */
+}
+
+.model-description {
+  font-size: 0.85rem; /* 设置字体大小 */
+  color: var(--color-text-secondary); /* 设置文本颜色 */
+  opacity: 0.8; /* 设置透明度 */
+}
+
+.header-actions {
+  display: flex; /* 使用弹性布局 */
+  gap: 0.5rem; /* 减小按钮之间的间距，更紧凑 */
+  align-items: center; /* 确保所有元素垂直居中 */
+  padding: 0.3rem 0.5rem; /* 添加内边距 */
+}
+
+/* 聊天消息区域 - 显示用户和AI助手之间的对话内容 */
+.chat-messages {
+  flex: 1; /* 占据除头部和输入区域外的所有空间 */
+  overflow-y: auto; /* 内容过多时允许垂直滚动 */
+  padding: 1.5rem; /* 调整内边距 */
+  padding-top: 80px; /* 增加顶部内边距，避免内容被预设角色框遮挡 */
+  display: flex; /* 使用弹性布局 */
+  flex-direction: column; /* 垂直排列消息 */
+  gap: 1.5rem; /* 调整消息之间的间距 */
+  scroll-behavior: smooth; /* 平滑滚动效果 */
+  background: var(--color-background); /* 背景色 */
+  width: 100%; /* 确保宽度占满容器 */
+  max-width: 900px; /* 调整最大宽度 */
+  margin: 0 auto; /* 水平居中 */
+  margin-top: 0; /* 移除顶部边距，因为预设角色区域已移至顶部 */
+  position: relative; /* 添加相对定位 */
+  padding-bottom: 2rem; /* 底部添加更多空间 */
+}
+
+.message {
+  display: flex; /* 使用弹性布局 */
+  gap: 1rem; /* 头像和消息内容之间的间距 */
+  max-width: 85%; /* 限制消息最大宽度，避免过长 */
+  animation: message-fade-in var(--animation-speed) ease-out; /* 消息出现时的淡入动画 */
+  width: 100%; /* 确保宽度一致性 */
+  position: relative; /* 添加相对定位 */
+}
+
+.message.user {
+  align-self: flex-end; /* 用户消息靠右对齐 */
+  flex-direction: row-reverse; /* 反转排列顺序，使头像在右侧 */
+}
+
+/* 添加消息时间标签样式 */
+.message::after {
+  content: attr(data-time);
+  position: absolute;
+  bottom: -1.2rem;
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  opacity: 0.7;
+}
+
+.message.user::after {
+  right: 0;
+}
+
+.message:not(.user)::after {
+  left: 3.5rem;
+}
+
+.message-avatar {
+  width: var(--avatar-size); /* 头像宽度 */
+  height: var(--avatar-size); /* 头像高度 */
+  border-radius: 50%; /* 圆形头像 */
+  overflow: hidden; /* 隐藏超出边界的内容 */
+  flex-shrink: 0; /* 防止头像被压缩 */
+  border: 2px solid var(--color-border); /* 头像边框 */
+  transition: transform var(--transition-speed); /* 添加过渡效果 */
+}
+
+.message-avatar:hover {
+  transform: scale(1.05); /* 悬停时轻微放大效果 */
+}
+
+.message-avatar img {
+  width: 100%; /* 图片宽度填满容器 */
+  height: 100%; /* 图片高度填满容器 */
+  object-fit: cover; /* 确保图片正确填充容器 */
+}
+
+.message-content {
+  padding: 1rem 1.2rem; /* 调整内边距 */
+  border-radius: 16px; /* 调整圆角边框，类似DeepSeek风格 */
+  background: var(--message-assistant-bg); /* AI助手消息背景色 */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08); /* 优化阴影效果，更轻柔 */
+  transition: all var(--transition-speed); /* 添加过渡效果 */
+  position: relative; /* 相对定位 */
+  border: 1px solid var(--color-border); /* 边框 */
+  line-height: 1.6; /* 行高 */
+  letter-spacing: 0.2px; /* 字母间距 */
+  max-width: 85%; /* 限制最大宽度 */
+}
+
+/* 推理内容区域 - 显示DeepSeek Reasoner模型的思维链 */
+.reasoning-content {
+  margin-bottom: 0.5rem;
+  border-radius: var(--border-radius);
+  background-color: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+}
+
+/* 推理内容标题 */
+.reasoning-header {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid var(--color-border);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* 暗色主题下的推理内容标题 */
+[data-theme="dark"] .reasoning-header {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* 推理内容标题图标 */
+.reasoning-header i {
+  margin-right: 0.5rem;
+  color: var(--color-primary);
+}
+
+/* 推理内容展开/收起按钮 */
+.toggle-reasoning {
+  margin-left: auto;
+  font-size: 0.85rem;
+  color: var(--color-primary);
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.05);
+  transition: background-color 0.2s;
+}
+
+/* 暗色主题下的展开/收起按钮 */
+[data-theme="dark"] .toggle-reasoning {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* 展开/收起按钮悬停效果 */
+.toggle-reasoning:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* 暗色主题下的展开/收起按钮悬停效果 */
+[data-theme="dark"] .toggle-reasoning:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* 推理内容主体 */
+.reasoning-body {
+  padding: 1rem;
+  max-height: 400px;
+  overflow-y: auto;
+  line-height: 1.6;
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+}
+
+.message.user .message-content {
+  background: var(--color-primary); /* 使用纯色背景，类似DeepSeek风格 */
+  color: white; /* 文字颜色为白色 */
+  border-bottom-right-radius: 6px; /* 右下角特殊圆角 */
+  border-color: var(--color-primary); /* 边框颜色 */
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.12); /* 优化阴影效果 */
+}
+
+.message-content:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* 悬停时增强阴影效果 */
+  transform: translateY(-2px); /* 轻微上移，增强交互感 */
+}
+
+.message.user .message-content:hover {
+  box-shadow: 0 5px 15px rgba(59, 130, 246, 0.2); /* 用户消息悬停时的特殊阴影 */
+}
+
+/* 添加消息出现时的动画 */
+@keyframes message-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message-content pre {
+  background: var(--color-surface); /* 代码块背景色 */
+  padding: 1rem; /* 内边距 */
+  border-radius: 8px; /* 圆角边框 */
+  overflow-x: auto; /* 内容过宽时允许水平滚动 */
+  margin: 0.5rem 0; /* 上下外边距 */
+}
+
+.message-content code {
+  font-family: var(--font-mono); /* 使用等宽字体，适合代码显示 */
+  font-size: 0.9em; /* 字体大小略小于普通文本 */
+  color: var(--color-text); /* 文本颜色 */
+}
+
+/* 输入区域 - 用户输入消息的底部区域 */
+.chat-input {
+  padding: 0; /* 移除内边距 */
+  background: transparent; /* 透明背景 */
+  position: relative; /* 相对定位，作为子元素的定位参考 */
+  max-width: 900px; /* 最大宽度 */
+  margin: 0 auto; /* 水平居中 */
+  width: 100%; /* 确保宽度占满容器 */
+  height: auto; /* 自适应高度 */
+  min-height: var(--input-height); /* 最小高度 */
+}
+
+.input-wrapper {
+  display: flex; /* 使用弹性布局 */
+  gap: 0.6rem; /* 减小元素之间的间距 */
+  align-items: center; /* 垂直居中对齐 */
+  background: var(--color-surface-alt); /* 背景色 */
+  border-radius: 24px; /* 调整圆角边框，类似DeepSeek风格 */
+  padding: 0.8rem 1rem; /* 调整内边距 */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* 优化阴影效果 */
+  border: 1px solid var(--color-border); /* 边框 */
+  transition: all var(--transition-speed); /* 添加过渡效果 */
+  width: 100%; /* 确保宽度占满容器 */
+  min-height: 56px; /* 设置最小高度 */
+  max-height: 200px; /* 设置最大高度限制 */
+  overflow: hidden; /* 隐藏溢出内容 */
+  position: relative; /* 相对定位 */
+}
+
+.input-wrapper:focus-within {
+  border-color: var(--color-primary); /* 聚焦时边框使用主题色 */
+  box-shadow: 0 6px 18px rgba(59, 130, 246, 0.25); /* 聚焦时增强阴影效果 */
+  transform: translateY(-3px); /* 聚焦时轻微上移 */
+}
+
+textarea {
+  flex: 1; /* 占据除发送按钮外的所有空间 */
+  border: none; /* 移除边框 */
+  background: transparent; /* 透明背景 */
+  resize: none; /* 禁止用户调整大小 */
+  padding: 0.5rem 0.75rem; /* 减小上下内边距，保持左右内边距 */
+  font-family: var(--font-sans); /* 使用无衬线字体 */
+  font-size: 1rem; /* 字体大小 */
+  line-height: 1.3; /* 减小行高 */
+  color: var(--color-text); /* 文本颜色 */
+  max-height: 300px; /* 增加最大高度，允许显示更多文本 */
+  min-height: 20px; /* 保持最小高度 */
+  outline: none; /* 移除聚焦时的轮廓 */
+  width: 100%; /* 确保宽度占满容器 */
+  overflow-y: auto; /* 当内容超过最大高度时显示滚动条 */
+}
+
+textarea:focus {
+  box-shadow: none; /* 聚焦时移除阴影 */
+}
+
+.send-button {
+  width: 36px; /* 调整按钮宽度 */
+  height: 36px; /* 调整按钮高度 */
+  border-radius: 50%; /* 圆形按钮 */
+  background: var(--color-primary); /* 使用主色调，类似DeepSeek风格 */
+  border: none; /* 移除边框 */
+  color: white; /* 图标颜色 */
+  cursor: pointer; /* 鼠标悬停时显示手型光标 */
+  align-self: center; /* 垂直居中 */
+  display: flex; /* 使用弹性布局居中图标 */
+  align-items: center; /* 垂直居中 */
+  justify-content: center; /* 水平居中 */
+  transition: all var(--transition-speed); /* 添加过渡效果 */
+  box-shadow: 0 2px 6px rgba(29, 78, 216, 0.2); /* 优化阴影效果 */
+  font-size: 1.1rem; /* 调整图标大小 */
+  flex-shrink: 0; /* 防止按钮被压缩 */
+  margin: 0; /* 移除外边距 */
+}
+
+.send-button:hover {
+  transform: translateY(-2px); /* 悬停时轻微上移 */
+  box-shadow: var(--shadow-md); /* 增强阴影效果 */
+}
+
+.send-button:disabled {
+  opacity: 0.6; /* 禁用时降低透明度 */
+  cursor: not-allowed; /* 禁用时显示禁止光标 */
+  transform: none; /* 移除变换效果 */
+}
+
+/* 移除了input-actions样式，因为按钮已经移到输入框内部 */
+
+.action-button {
+  width: 36px; /* 按钮宽度 */
+  height: 36px; /* 按钮高度 */
+  border-radius: 50%; /* 圆形按钮 */
+  background: transparent; /* 透明背景 */
+  border: none; /* 移除边框 */
+  color: var(--color-text-secondary); /* 图标颜色 */
+  cursor: pointer; /* 鼠标悬停时显示手型光标 */
+  display: flex; /* 使用弹性布局居中图标 */
+  align-items: center; /* 垂直居中 */
+  justify-content: center; /* 水平居中 */
+  transition: all var(--transition-speed); /* 添加过渡效果 */
+  flex-shrink: 0; /* 防止按钮被压缩 */
+}
+
+.action-button:hover {
+  background: var(--color-hover); /* 悬停时改变背景色 */
+  transform: translateY(-1px); /* 轻微上移 */
+}
+
+/* Token 计数器 - 显示当前对话使用的token数量和预计费用 */
+.token-counter {
+  position: absolute; /* 绝对定位 */
+  bottom: 0.5rem; /* 距离底部的距离 */
+  right: 1rem; /* 距离右侧的距离 */
+  font-size: 0.875rem; /* 字体大小 */
+  color: var(--color-text-secondary); /* 文本颜色，使用次要文本颜色 */
+  display: flex; /* 使用弹性布局 */
+  gap: 1rem; /* 元素之间的间距 */
+  align-items: center; /* 垂直居中对齐 */
+}
+
+/* 加载状态指示器 - AI思考和生成回复时显示的加载动画 */
+.loading-indicator {
+  position: fixed; /* 固定定位，不随页面滚动 */
+  bottom: 1rem; /* 距离底部的距离 */
+  left: 50%; /* 水平居中 */
+  transform: translateX(-50%); /* 精确水平居中 */
+  background: var(--color-surface); /* 背景色 */
+  padding: 0.75rem 1.5rem; /* 内边距 */
+  border-radius: 50px; /* 圆角边框，形成胶囊形状 */
+  box-shadow: var(--shadow-lg); /* 添加阴影效果 */
+  display: flex; /* 使用弹性布局 */
+  align-items: center; /* 垂直居中对齐 */
+  gap: 0.75rem; /* 元素之间的间距 */
+  opacity: 0; /* 初始状态下透明 */
+  visibility: hidden; /* 初始状态下隐藏 */
+  transition: all var(--transition-speed); /* 添加过渡效果 */
+}
+
+.loading-indicator.active {
+  opacity: 1; /* 激活状态下完全不透明 */
+  visibility: visible; /* 激活状态下可见 */
+}
+
+.spinner {
+  width: 20px; /* 宽度 */
+  height: 20px; /* 高度 */
+  border: 2px solid var(--color-border); /* 边框 */
+  border-top-color: var(--color-primary); /* 顶部边框使用主题色，形成旋转效果 */
+  border-radius: 50%; /* 圆形 */
+  animation: spin 1s linear infinite; /* 应用旋转动画，无限循环 */
+}
+
+/* 模态框 - 弹出窗口，用于显示模型详细信息等内容 */
+.modal {
+  position: fixed; /* 固定定位，覆盖整个视口 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* 半透明黑色背景，形成遮罩效果 */
+  display: none; /* 初始状态下隐藏 */
+  align-items: center; /* 垂直居中对齐 */
+  justify-content: center; /* 水平居中对齐 */
+  z-index: 1000; /* 最高层级，确保显示在所有元素之上 */
+}
+
+.modal.active {
+  display: flex; /* 激活状态下显示 */
+}
+
+.modal-content {
+  width: 90%; /* 宽度占视口的90% */
+  max-width: 600px; /* 最大宽度限制 */
+  background: var(--color-surface); /* 背景色 */
+  border-radius: var(--border-radius); /* 圆角边框 */
+  box-shadow: var(--shadow-lg); /* 添加阴影效果 */
+  animation: modal-fade-in var(--animation-speed) ease-out; /* 淡入动画效果 */
+}
+
+/* 预设角色模态框样式 */
+.preset-modal {
+  background: linear-gradient(145deg, var(--color-surface), var(--color-surface-alt));
+  border: 1px solid var(--color-border);
+  max-width: 650px;
+}
+
+.modal-header {
+  padding: 1rem 1.5rem; /* 内边距 */
+  border-bottom: 1px solid var(--color-border); /* 底部边框，与内容区域分隔 */
+  display: flex; /* 使用弹性布局 */
+  align-items: center; /* 垂直居中对齐 */
+  justify-content: space-between; /* 两端对齐，标题和关闭按钮分别靠左右两侧 */
+}
+
+.modal-header h3 {
+  display: flex;
+  align-items: center;
+  font-size: 1.25rem;
+  color: var(--color-text);
+}
+
+.modal-header h3 i {
+  margin-right: 0.5rem;
+  color: var(--color-primary);
+}
+
+.modal-body {
+  padding: 1.5rem; /* 内边距 */
+  max-height: 70vh; /* 最大高度限制为视口高度的70% */
+  overflow-y: auto; /* 内容过多时允许垂直滚动 */
+}
+
+.close-button {
+  background: none; /* 透明背景 */
+  border: none; /* 移除边框 */
+  font-size: 1.5rem; /* 字体大小 */
+  color: var(--color-text); /* 文本颜色 */
+  cursor: pointer; /* 鼠标悬停时显示手型光标 */
+  opacity: 0.5; /* 初始状态下半透明 */
+  transition: opacity var(--transition-speed); /* 添加过渡效果 */
+}
+
+.close-button:hover {
+  opacity: 1; /* 悬停时完全不透明 */
+}
+
+/* 预设角色表单样式 */
+.preset-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* 头像选择器样式 */
+.preset-avatar-selector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.avatar-preview {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--color-primary);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  margin-bottom: 1rem;
+  transition: all var(--transition-speed);
+}
+
+.avatar-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-options {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.avatar-option {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--color-border);
+  cursor: pointer;
+  transition: all var(--transition-speed);
+  opacity: 0.7;
+}
+
+.avatar-option img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-option:hover {
+  transform: scale(1.1);
+  opacity: 0.9;
+  border-color: var(--color-primary);
+}
+
+.avatar-option.selected {
+  border: 2px solid var(--color-primary);
+  transform: scale(1.1);
+  opacity: 1;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+/* 表单样式 */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-weight: 500;
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.styled-input, .styled-textarea {
+  padding: 0.75rem 1rem;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-alt);
+  color: var(--color-text);
+  font-size: 1rem;
+  transition: all var(--transition-speed);
+  width: 100%;
+}
+
+.styled-input:focus, .styled-textarea:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+  outline: none;
+}
+
+.styled-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.input-tip {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  margin-top: 0.25rem;
+}
+
+/* 表单操作按钮 */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.primary-button, .secondary-button {
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-speed);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.primary-button {
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+  color: white;
+  border: none;
+  box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+}
+
+.primary-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(59, 130, 246, 0.4);
+}
+
+.secondary-button {
+  background: transparent;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+.secondary-button:hover {
+  background: var(--color-surface-alt);
+  border-color: var(--color-text-secondary);
+}
+
+/* 提示消息 - 临时显示的通知或提示信息 */
+.toast {
+  position: fixed; /* 固定定位，不随页面滚动 */
+  bottom: 2rem; /* 距离底部的距离 */
+  left: 50%; /* 水平居中 */
+  transform: translateX(-50%) translateY(100%); /* 精确水平居中并初始位置在视口下方 */
+  padding: 0.75rem 1.5rem; /* 内边距 */
+  background: var(--color-surface); /* 背景色 */
+  color: var(--color-text); /* 文本颜色 */
+  border-radius: var(--border-radius); /* 圆角边框 */
+  box-shadow: var(--shadow-lg); /* 添加阴影效果，增强立体感 */
+  z-index: 1000;
+  opacity: 0;
+  transition: all var(--transition-speed);
+}
+
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* 动画 */
+@keyframes message-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes modal-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    left: -100%;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: 300px;
+    z-index: 1000;
+    transition: left var(--transition-speed);
+  }
+
+  .sidebar.open {
+    left: 0;
+  }
+
+  .main-content {
+    width: 100%;
+  }
+
+  .message {
+    max-width: 90%;
+  }
+
+  .chat-header {
+    padding: 0 1rem;
+    left: 10%;
+  }
+
+  .chat-messages {
+    padding: 1rem;
+  }
+
+  .chat-input {
+    padding: 0.75rem;
+  }
+
+  .input-wrapper {
+    padding: 0.25rem;
+  }
+
+  .token-counter {
+    position: static;
+    margin-top: 0.5rem;
+    justify-content: flex-end;
+  }
+
+  .main-content.sidebar-open {
+    margin-left: 0;
+  }
+
+  .main-content.sidebar-open .chat-header {
+    left: 0;
+  }
+
+  .sidebar-toggle {
+    top: 12px;
+    left: 12px;
+    transform: none;
+  }
+
+  .sidebar.open + .main-content .sidebar-toggle {
+    left: calc(300px - 52px);
+  }
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-secondary);
+}
+
+/* 拖放上传样式 */
+.drag-over {
+  position: relative;
+}
+
+.drag-over::after {
+  content: '拖放文件到这里上传';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 500;
+  z-index: 1000;
+}
+
+/* 图片预览样式 */
+.image-preview-modal .modal-content {
+  max-width: 90vw;
+  max-height: 90vh;
+  background: var(--color-surface);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.image-preview-modal .modal-body {
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-background);
+}
+
+.image-preview-modal img {
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+}
+
+/* 消息中的图片样式 */
+.message-content img {
+  max-width: 100%;
+  max-height: 300px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform var(--transition-speed);
+}
+
+.message-content img:hover {
+  transform: scale(1.02);
+}
+
+/* 文件上传按钮样式 */
+.file-upload {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.file-upload input[type="file"] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+}
+
+/* 文件上传进度条 */
+.upload-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--color-border);
+  z-index: 1000;
+}
+
+.upload-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+  transition: width 0.3s ease;
+}
+
+/* 文件类型图标 */
+.file-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}
+
+/* 文件预览卡片 */
+.file-preview {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  margin: 8px 0;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+}
+
+.file-preview-info {
+  flex: 1;
+  margin-left: 8px;
+}
+
+.file-preview-name {
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.file-preview-size {
+  font-size: 0.875rem;
+  color: var(--color-text);
+  opacity: 0.8;
+}
+
+.file-preview-remove {
+  padding: 4px;
+  background: none;
+  border: none;
+  color: var(--color-text);
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity var(--transition-speed);
+}
+
+.file-preview-remove:hover {
+  opacity: 1;
+}
+
+/* 图片网格布局 */
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  padding: 16px;
+}
+
+.image-grid-item {
+  position: relative;
+  padding-bottom: 100%;
+  overflow: hidden;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.image-grid-item img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-speed);
+}
+
+.image-grid-item:hover img {
+  transform: scale(1.05);
+}
+
+/* 图片上传动画 */
+@keyframes upload-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.uploading {
+  animation: upload-pulse 1s infinite;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .image-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 8px;
+    padding: 8px;
+  }
+  
+  .message-content img {
+    max-height: 200px;
+  }
+  
+  .image-preview-modal .modal-content {
+    width: 95vw;
+    margin: 10px;
+  }
+}
+
+.main-content.sidebar-open {
+  margin-left: var(--sidebar-width);
+}
+
+.main-content.sidebar-open .chat-header {
+  left: var(--sidebar-width);
+}
